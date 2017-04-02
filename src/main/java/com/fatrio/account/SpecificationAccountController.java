@@ -2,6 +2,9 @@ package com.fatrio.account;
 
 import static org.springframework.data.jpa.domain.Specifications.where;
 
+import static com.fatrio.account.AccountSpecs.hasEmail;
+import static com.fatrio.account.AccountSpecs.hasRole;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +36,7 @@ public class SpecificationAccountController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public Account currentAccountSpecifications(@RequestParam String email) {
-        Specification<Account> hasEmail = this.accountService.hasEmail(email);
+        Specification<Account> hasEmail = hasEmail(email);
         return this.accountService.findOne(hasEmail);
     }
 
@@ -50,8 +53,8 @@ public class SpecificationAccountController {
     public Account currentAccountSpecificationsAll(@RequestParam(required=false, defaultValue="") String email, 
     											   @RequestParam(required=false, defaultValue="") String role) {
     	// Roles: "ROLE_USER", "ROLE_ADMIN"
-        Specification<Account> hasEmail = this.accountService.hasEmail(email);
-        Specification<Account> hasRole = this.accountService.hasRole(role);
+        Specification<Account> hasEmail = hasEmail(email);
+        Specification<Account> hasRole = hasRole(role);
         return this.accountService.findOne(where(hasEmail).or(hasRole));
     }
 }

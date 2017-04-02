@@ -86,13 +86,5 @@ public class AccountService implements UserDetailsService {
 	public Slice<Account> find(Specification<Account> specs, Pageable page) {
 		return this.accountRepository.findAll(specs, page);
 	}
-	
-	public Specification<Account> hasEmail(String email) {
-		return (root, query, cb) -> cb.equal(root.get(Account_.email), email);
-	}
-	
-	public Specification<Account> hasRole(String role) {
-		return (root, query, cb) -> cb.equal(root.get(Account_.role), role);
-	}
 
 }
